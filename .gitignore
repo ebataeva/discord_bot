@@ -1,0 +1,9 @@
+venv/
+.DS_Store
+__pycache__/*
+*.log
+settings.py
+.vscode/
+*.pyc
+.env
+.config.py
