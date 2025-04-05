@@ -1,5 +1,5 @@
 import unittest
-from api.huggingface_api import HuggingFaceClient
+from api.ui_api import HuggingFaceClient
 
 class TestHuggingFaceClient(unittest.TestCase):
     def test_generate_image(self):

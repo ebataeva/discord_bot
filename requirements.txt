@@ -1,8 +1,4 @@
 discord.py
 python-dotenv
 requests
-diffusers
-invisible_watermark 
-transformers 
-accelerate 
-safetensors
+replicate
