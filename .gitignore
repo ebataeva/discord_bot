@@ -6,4 +6,3 @@ settings.py
 .vscode/
 *.pyc
 .env
-.config.py

@@ -3,7 +3,7 @@ from discord.ext import commands
 from config import DISCORD_TOKEN
 from commands.generate_image import generate_image_command
 
-from api.huggingface_api import HuggingFaceClient
+from api.hf_client import HuggingFaceClient
 
 
 intents = discord.Intents.default()
