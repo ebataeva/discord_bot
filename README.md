@@ -1,9 +1,10 @@
 # Discord Hugging Face Image Generator Bot
+This project is a Discord bot that interacts with the Hugging Face API to generate images based on text prompts using interactive buttons.
 
-Проект представляет собой Discord-бота, который взаимодействует с Hugging Face API для генерации изображений по текстовому промту с использованием интерактивных кнопок.
 
-## Установка
+## Installation
 
-1. Установите зависимости:
+1. Install dependencies:
+
    ```bash
-   pip install -r requirements.txt
+pip install -r requirements.txt

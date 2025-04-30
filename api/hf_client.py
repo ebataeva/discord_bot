@@ -1,6 +1,6 @@
 import torch
 from diffusers import DiffusionPipeline
-from config import HF_API_KEY, HF_MODEL_ID
+from config import HF_MODEL_ID
 
 class HuggingFaceClient:
     def __init__(self):
@@ -8,7 +8,7 @@ class HuggingFaceClient:
         self.pipe = DiffusionPipeline.from_pretrained(
             self.model_id,
             torch_dtype=torch.float32,
-            use_auth_token=HF_API_KEY  # передаём токен из .env
+            local_files_only=True
         )
         self.pipe.to("cpu")
 
