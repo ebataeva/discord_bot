@@ -1,8 +1,10 @@
-discord.py
+discord.py>=2.0
 python-dotenv
 requests
-diffusers
-invisible_watermark 
-transformers 
-accelerate 
-safetensors
+diffusers>=0.25.0
+invisible_watermark
+transformers>=4.36.0
+accelerate>=0.26.0
+safetensors>=0.3.0
+tqdm>=4.66.0
+Pillow>=10.0.0

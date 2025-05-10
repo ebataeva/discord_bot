@@ -4,6 +4,7 @@ from config import DISCORD_TOKEN
 from commands.generate_image import generate_image_command
 
 from api.hf_client import HuggingFaceClient
+from utils.logger import logger
 
 
 intents = discord.Intents.default()
@@ -16,6 +17,14 @@ bot.add_command(generate_image_command)
 
 @bot.event
 async def on_ready():
-    print(f"Logged in as {bot.user}")
+    logger.info("✅ Bot is ready and logged in as %s", bot.user)
+
+@bot.event
+async def on_disconnect():
+    logger.warning("⚠️ Bot has disconnected from Discord")
+
+@bot.event
+async def on_resumed():
+    logger.info("🔄 Bot connection resumed")
 
 bot.run(DISCORD_TOKEN)
