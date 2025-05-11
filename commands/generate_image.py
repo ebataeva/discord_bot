@@ -21,6 +21,6 @@ async def generate_image_command(ctx, *, prompt: str):
         file = discord.File(fp=buf, filename="generated.png")
 
         # Pass the prompt to the View so the button can reuse it
-        await msg.edit(content=None, attachments=[file], view=ImageButtonView(prompt))
+        await msg.edit(content=f"{ctx.author.mention}\n**Prompt:** {prompt}", attachments=[file], view=ImageButtonView(prompt))
     except Exception as e:
         await msg.edit(content=f"❌ It seems something went wrong...: {e}")

@@ -10,7 +10,7 @@ class ImageButtonView(discord.ui.View):
         self.prompt = prompt
 
     @discord.ui.button(
-            label="Try ones more!", 
+            label="🔁 Regenerate", 
             style=discord.ButtonStyle.primary)
     async def regenerate_button(
         self, 
@@ -50,7 +50,7 @@ class ImageButtonView(discord.ui.View):
 
             # Отправляем новое изображение
             await interaction.followup.send(
-                "Here is new image!", file=file
+                content=f"{interaction.user.mention} Here is your regenerated image!\n**Prompt:** {self.prompt}", file=file
                 )
         except Exception as e:
             logger.error("❌ Failed to regenerate image | Prompt: %s | Error: %s", self.prompt, str(e))
