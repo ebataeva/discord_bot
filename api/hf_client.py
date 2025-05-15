@@ -8,7 +8,7 @@ class HuggingFaceClient:
         self.pipe = DiffusionPipeline.from_pretrained(
             self.model_id,
             torch_dtype=torch.float32,
-            local_files_only=True
+            # local_files_only=True
         )
         self.pipe.to("cpu")
 
