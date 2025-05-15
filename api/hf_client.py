@@ -22,6 +22,6 @@ class HuggingFaceClient:
         height=512,
         width=512,
         num_inference_steps=65,
-        guidance_scale=7.5
+        guidance_scale=6.5
         ).images[0]
         return image
