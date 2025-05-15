@@ -2,7 +2,7 @@ version: '3.8'
 
 services:
   discord_bot:
-    image: lenqquisa/discord_bot:latest
+    image: lenqquisa/discord-bot:latest
     container_name: discord_bot_container
     restart: unless-stopped
     env_file: .env
