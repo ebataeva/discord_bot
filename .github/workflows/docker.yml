@@ -39,4 +39,5 @@ jobs:
           context: .
           push: true
           platforms: linux/amd64
+          provenance: false
           tags: lenqquisa/discord-bot:latest
