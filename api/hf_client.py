@@ -5,6 +5,7 @@ from config import HF_MODEL_ID
 class HuggingFaceClient:
     def __init__(self):
         self.model_id = HF_MODEL_ID
+        print(f"⚠️ LOADING MODEL: {self.model_id}")
         self.pipe = DiffusionPipeline.from_pretrained(
             self.model_id,
             torch_dtype=torch.float16,
