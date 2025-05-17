@@ -6,4 +6,9 @@ services:
     container_name: discord_bot_container
     restart: unless-stopped
     env_file: .env
-    command: python bot.py
+    command: python3 bot.py
+    runtime: nvidia
+    environment:
+      - NVIDIA_VISIBLE_DEVICES=all
+    device_requests:
+      - capabilities: [gpu]
