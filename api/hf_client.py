@@ -7,10 +7,10 @@ class HuggingFaceClient:
         self.model_id = HF_MODEL_ID
         self.pipe = DiffusionPipeline.from_pretrained(
             self.model_id,
-            torch_dtype=torch.float32,
+            torch_dtype=torch.float16,
             # local_files_only=True
         )
-        self.pipe.to("cpu")
+        self.pipe.to("cuda")
 
 
     def generate_image(self, prompt: str):
