@@ -10,5 +10,3 @@ services:
     runtime: nvidia
     environment:
       - NVIDIA_VISIBLE_DEVICES=all
-    device_requests:
-      - capabilities: [gpu]
