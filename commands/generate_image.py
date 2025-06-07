@@ -60,3 +60,31 @@ async def test_lido_prompts(ctx):
             await msg.edit(content=f"✅ **Prompt {i+1}:** {prompt}", attachments=[file])
         except Exception as e:
             await msg.edit(content=f"❌ Failed for `{prompt}`: {e}")
+# New command to combine user input with Lido-style prompt addons
+@commands.command(name="combine_with_lido")
+async def combine_with_lido(ctx, *, user_input: str):
+    lido_addons = [
+        "in a room decorated with Lido-style water droplets, high detail, bright colors",
+        "with a glowing Lido-style water droplet nearby, photorealistic, sharp details, happy mood",
+        "with Lido-inspired droplets subtly in the design, high quality, realistic",
+        "under a Lido-style rain of blue glowing droplets, cinematic lighting, ultra-realistic",
+        "surrounded by Lido-themed elements, droplets in background, vibrant digital art",
+        "inside a glowing Lido droplet, fantasy setting, detailed and soft lighting"
+    ]
+
+    prompts = [f"{user_input}, {addon}" for addon in lido_addons]
+
+    prompt_list_text = "\n".join([f"{i+1}. {p}" for i, p in enumerate(prompts)])
+    await ctx.send(f"🧪 Testing your input combined with Lido aesthetics:\n\n**Prompt list:**\n{prompt_list_text}")
+
+    for i, prompt in enumerate(prompts):
+        msg = await ctx.send(f"🖼 Generating `{prompt}` ...")
+        try:
+            image = await asyncio.to_thread(ctx.bot.hf_client.generate_image, prompt)
+            buf = io.BytesIO()
+            image.save(buf, format="PNG")
+            buf.seek(0)
+            file = discord.File(fp=buf, filename=f"lido_prompt_{i + 1}.png")
+            await msg.edit(content=f"✅ **Prompt {i+1}:** {prompt}", attachments=[file])
+        except Exception as e:
+            await msg.edit(content=f"❌ Failed for `{prompt}`: {e}")
