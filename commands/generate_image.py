@@ -11,7 +11,7 @@ def prepare_prompt(user_input: str) -> str:
     if "drop" in user_input.lower() or "droplet" in user_input.lower():
         return user_input
     else:
-        return f"Centered Lido-style water droplet logo in foreground, in front of {user_input}, crypto branding, minimalistic, high contrast"
+        return f"{user_input}, with subtle Lido-style water droplet elements integrated in the background, high quality, balanced composition"
 
 @commands.command(name="generate")
 async def generate_image_command(ctx, *, prompt: str):
