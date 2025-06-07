@@ -3,16 +3,15 @@ from diffusers import DiffusionPipeline
 from config import HF_MODEL_ID
 
 class HuggingFaceClient:
-    def __init__(self):
-        
+    def __init__(self): 
         self.model_id = HF_MODEL_ID
         print(f"⚠️ LOADING MODEL: {self.model_id}")
         self.pipe = DiffusionPipeline.from_pretrained(
-            self.model_id,
-            torch_dtype=torch.float,
-            local_files_only=True
+            HF_MODEL_ID,                           # ← используем из config.py
+            torch_dtype=torch.float16,
+            # local_files_only=True  # включи, если хочешь работать только локально
         )
-        self.pipe.to("cuda")
+        self.pipe.to("cuda") 
 
 
     def generate_image(self, prompt: str):
