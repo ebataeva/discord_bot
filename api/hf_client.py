@@ -23,7 +23,7 @@ class HuggingFaceClient:
         prompt,
         height=512,
         width=512,
-        num_inference_steps=30,
+        num_inference_steps=65,
         guidance_scale=6.5
         ).images[0]
         return image
