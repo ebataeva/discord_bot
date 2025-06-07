@@ -38,12 +38,12 @@ async def generate_image_command(ctx, *, prompt: str):
 @commands.command(name="test_lido_prompts")
 async def test_lido_prompts(ctx):
     prompts = [
-        "Lido-style water droplet, glossy, highly detailed, centered, minimal background",
-        "Abstract Lido droplet, soft colors, smooth surface, futuristic design",
-        "High quality Lido-style droplet, floating in white space, photorealistic",
-        "Lido-themed droplet, stylized and sharp, 3D render, crypto-inspired",
-        "Blue-green glowing droplet in Lido aesthetic, minimalism, digital art",
-        "Lido droplet illustration, no text, centered, clean background"
+        "Realistic funny kittens playing together, in a room decorated with Lido-style water droplets, high detail, bright colors",
+        "A group of realistic funny kittens playing with a glowing Lido-style water droplet toy, photorealistic, sharp details, happy mood",
+        "Playful kittens chasing each other on a white background, with Lido-inspired droplets subtly in the design, high quality, realistic",
+        "Funny cute kittens playing under a Lido-style rain of blue glowing droplets, cinematic lighting, ultra-realistic",
+        "Lido-themed cat playground — realistic kittens climbing, jumping, playing, droplets in background, vibrant digital art",
+        "Tiny kittens napping inside a glowing Lido droplet, fantasy setting, detailed and soft lighting"
     ]
 
     prompt_list_text = "\n".join([f"{i+1}. {p}" for i, p in enumerate(prompts)])
