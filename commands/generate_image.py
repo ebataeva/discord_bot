@@ -1,3 +1,4 @@
+
 # commands/generate_image.py
 import io
 import discord
@@ -7,6 +8,22 @@ from discord.ext import commands
 from ui.buttons import ImageButtonView
 from utils.logger import logger
 
+async def generate_images_from_prompt_list(ctx, prompts: list, prefix: str, description: str):
+    prompt_list_text = "\n".join([f"{i+1}. {p}" for i, p in enumerate(prompts)])
+    await ctx.send(f"🧪 {description}\n\n**Prompt list:**\n{prompt_list_text}")
+
+    for i, prompt in enumerate(prompts):
+        msg = await ctx.send(f"🖼 Generating `{prompt}` ...")
+        try:
+            image = await asyncio.to_thread(ctx.bot.hf_client.generate_image, prompt)
+            buf = io.BytesIO()
+            image.save(buf, format="PNG")
+            buf.seek(0)
+            file = discord.File(fp=buf, filename=f"{prefix}_{i + 1}.png")
+            await msg.edit(content=f"✅ **Prompt {i+1}:** {prompt}", attachments=[file])
+        except Exception as e:
+            await msg.edit(content=f"❌ Failed for `{prompt}`: {e}")
+
 def prepare_prompt(user_input: str) -> str:
     if "drop" in user_input.lower() or "droplet" in user_input.lower():
         return user_input
@@ -15,7 +32,7 @@ def prepare_prompt(user_input: str) -> str:
 
 @commands.command(name="generate")
 async def generate_image_command(ctx, *, prompt: str):
-    msg = await ctx.send("🖼 Generating image... please wait 1-2 minutes")
+    msg = await ctx.send("🖼 Generating image... please wait a bit...")
     start = time.time()
     logger.info("🧠 Starting image generation | Prompt  : %s", prompt)
     prompt_droplet = prepare_prompt(prompt)
@@ -33,34 +50,6 @@ async def generate_image_command(ctx, *, prompt: str):
         await msg.edit(content=f"❌ It seems something went wrong...: {e}")
 
 
-
-# New command for testing multiple Lido-related prompts
-@commands.command(name="test_lido_prompts")
-async def test_lido_prompts(ctx):
-    prompts = [
-        "Realistic funny kittens playing together, in a room decorated with Lido-style water droplets, high detail, bright colors",
-        "A group of realistic funny kittens playing with a glowing Lido-style water droplet toy, photorealistic, sharp details, happy mood",
-        "Playful kittens chasing each other on a white background, with Lido-inspired droplets subtly in the design, high quality, realistic",
-        "Funny cute kittens playing under a Lido-style rain of blue glowing droplets, cinematic lighting, ultra-realistic",
-        "Lido-themed cat playground — realistic kittens climbing, jumping, playing, droplets in background, vibrant digital art",
-        "Tiny kittens napping inside a glowing Lido droplet, fantasy setting, detailed and soft lighting"
-    ]
-
-    prompt_list_text = "\n".join([f"{i+1}. {p}" for i, p in enumerate(prompts)])
-    await ctx.send(f"🧪 Testing multiple prompts... please wait\n\n**Prompt list:**\n{prompt_list_text}")
-
-    for i, prompt in enumerate(prompts):
-        msg = await ctx.send(f"🖼 Generating `{prompt}` ...")
-        try:
-            image = await asyncio.to_thread(ctx.bot.hf_client.generate_image, prompt)
-            buf = io.BytesIO()
-            image.save(buf, format="PNG")
-            buf.seek(0)
-            file = discord.File(fp=buf, filename=f"prompt_{i + 1}.png")
-            await msg.edit(content=f"✅ **Prompt {i+1}:** {prompt}", attachments=[file])
-        except Exception as e:
-            await msg.edit(content=f"❌ Failed for `{prompt}`: {e}")
-# New command to combine user input with Lido-style prompt addons
 @commands.command(name="combine_with_lido")
 async def combine_with_lido(ctx, *, user_input: str):
     lido_addons = [
@@ -74,17 +63,61 @@ async def combine_with_lido(ctx, *, user_input: str):
 
     prompts = [f"{user_input}, {addon}" for addon in lido_addons]
 
-    prompt_list_text = "\n".join([f"{i+1}. {p}" for i, p in enumerate(prompts)])
-    await ctx.send(f"🧪 Testing your input combined with Lido aesthetics:\n\n**Prompt list:**\n{prompt_list_text}")
+    await generate_images_from_prompt_list(ctx, prompts, "lido", "Testing your input combined with Lido aesthetics")
 
-    for i, prompt in enumerate(prompts):
-        msg = await ctx.send(f"🖼 Generating `{prompt}` ...")
-        try:
-            image = await asyncio.to_thread(ctx.bot.hf_client.generate_image, prompt)
-            buf = io.BytesIO()
-            image.save(buf, format="PNG")
-            buf.seek(0)
-            file = discord.File(fp=buf, filename=f"lido_prompt_{i + 1}.png")
-            await msg.edit(content=f"✅ **Prompt {i+1}:** {prompt}", attachments=[file])
-        except Exception as e:
-            await msg.edit(content=f"❌ Failed for `{prompt}`: {e}")
+@commands.command(name="combine_with_big_droplet")
+async def combine_with_big_droplet(ctx, *, user_input: str):
+    
+    big_droplet_addons = [
+        "with a huge glossy Lido-style droplet in the center, highly detailed, reflecting light",
+        "featuring one large glowing water droplet, Lido-style, with shiny surface and reflections",
+        "dominated by a single big crystal-like Lido droplet, luminous, photorealistic",
+        "with one oversized sparkling droplet hovering in the air, digital art style",
+        "a scene with one prominent glossy blue Lido droplet, surreal lighting, beautiful reflections",
+        "with an enormous water droplet as the centerpiece, shining like a gem, cinematic composition"
+    ]
+
+    prompts = [f"{user_input}, {addon}" for addon in big_droplet_addons]
+
+    await generate_images_from_prompt_list(ctx, prompts, "big_droplet", "Combining your input with BIG droplet aesthetics")
+@commands.command(name="combine_with_tech_droplets")
+async def combine_with_tech_droplets(ctx, *, user_input: str):
+    tech_addons = [
+        "with glowing digital Lido droplets, tech-inspired UI elements, cyberpunk background",
+        "featuring a large neon-blue droplet with circuitry inside, futuristic setting, sci-fi lighting",
+        "surrounded by holographic droplet projections, digital rain, cyberpunk cityscape",
+        "one central Lido droplet containing a microchip, blue and violet glow, tech aesthetics",
+        "Lido droplet embedded in a digital HUD interface, clean lines, high-tech UI overlay",
+        "floating above a grid with shiny cyber droplets falling, stylized, digital art"
+    ]
+
+    prompts = [f"{user_input}, {addon}" for addon in tech_addons]
+    await generate_images_from_prompt_list(ctx, prompts, "tech_droplet", "Combining your input with TECH droplet aesthetics")
+
+
+@commands.command(name="combine_with_abstract_droplets")
+async def combine_with_abstract_droplets(ctx, *, user_input: str):
+    abstract_addons = [
+        "with abstract liquid droplet forms, surreal background, bold artistic shapes",
+        "inside a giant translucent droplet, warped reflections, dreamlike colors",
+        "surrounded by floating symbolic droplets, geometric fragments, digital painting",
+        "the entire scene contained within a single large Lido-style droplet, reflective surface, artistic composition",
+        "featuring melting droplet patterns, distorted light, vivid surrealism",
+        "a warped reality held inside a glossy Lido droplet, modern abstract art style"
+    ]
+
+    prompts = [f"{user_input}, {addon}" for addon in abstract_addons]
+    await generate_images_from_prompt_list(ctx, prompts, "abstract_droplet", "Combining your input with ABSTRACT droplet aesthetics")
+
+ @commands.command(name="combine_inside_droplet")
+ async def combine_inside_droplet(ctx, *, user_input: str):
+     inside_droplet_addons = [
+         "the scene is encapsulated inside a transparent water droplet, fisheye distortion, high detail, surreal lighting",
+         "everything is happening inside one giant Lido droplet, the curved surface warps the world inside, cinematic effect",
+         "the entire world is seen through a large glossy droplet lens, bluish tones, glowing edges, dreamy effect",
+         "immersed inside a droplet bubble, refracted light and reflections shape the environment, crystal-clear",
+         "a magical world inside a shiny Lido-style droplet, warped interior, smooth reflections",
+         "dreamlike environment seen from within a droplet shell, curvature and glow, hyper-realistic art"
+     ]
+     prompts = [f"{user_input}, {addon}" for addon in inside_droplet_addons]
+     await generate_images_from_prompt_list(ctx, prompts, "inside_droplet", "Generating scenes INSIDE a droplet")
