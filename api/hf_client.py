@@ -9,7 +9,7 @@ class HuggingFaceClient:
         print(f"⚠️ LOADING MODEL: {self.model_id}")
         self.pipe = DiffusionPipeline.from_pretrained(
             self.model_id,
-            torch_dtype=torch.float16,
+            torch_dtype=torch.float,
             local_files_only=True
         )
         self.pipe.to("cuda")
