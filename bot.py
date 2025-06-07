@@ -1,7 +1,7 @@
 import discord
 from discord.ext import commands
 from config import DISCORD_TOKEN
-from commands.generate_image import generate_image_command
+from commands.generate_image import generate_image_command, test_lido_prompts
 
 from api.hf_client import HuggingFaceClient
 from utils.logger import logger
@@ -14,6 +14,7 @@ bot.hf_client = HuggingFaceClient()
 
 # Регистрируем команду генерации изображения
 bot.add_command(generate_image_command)
+bot.add_command(test_lido_prompts)
 
 @bot.event
 async def on_ready():
