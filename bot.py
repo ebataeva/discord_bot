@@ -14,6 +14,7 @@ bot.hf_client = HuggingFaceClient()
 
 # Регистрируем команду генерации изображения
 bot.add_command(generate_image.test_lido_prompts)
+bot.add_command(generate_image.generate_image_command)
 
 @bot.event
 async def on_ready():
